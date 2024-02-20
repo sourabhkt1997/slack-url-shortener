@@ -112,8 +112,9 @@ urlRouter.get("/:encoded",async(req,res)=>{
   }
 })
 
+
 //testing
-url.get("/",async(req,res)=>{
+urlRouter.get("/",async(req,res)=>{
   try {
     res.status(200).send("welcome to slack-url-shortner")
   } catch (error) {
