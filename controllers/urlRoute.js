@@ -8,6 +8,7 @@ const urlRouter = express.Router();
 
 
 
+
 // to get the event from slack and emit messages back
 urlRouter.post('/slack/events', async(req, res) => {
  
@@ -31,7 +32,7 @@ urlRouter.post('/slack/events', async(req, res) => {
               type:"section",
               text:{
                 type:"mrkdwn",
-                text:`Here is your Shortended URL : http://localhost:8700/${shorturl} `
+                text:`Here is your Shortended URL click to redirect: https://slack-url-shortener.onrender.com/${shorturl} `
               }
             }
            ]  
@@ -111,7 +112,14 @@ urlRouter.get("/:encoded",async(req,res)=>{
   }
 })
 
-
+//testing
+url.get("/",async(req,res)=>{
+  try {
+    res.status(200).send("welcome to slack-url-shortner")
+  } catch (error) {
+    res.status(400).send("error")
+  }
+})
 
 
 
