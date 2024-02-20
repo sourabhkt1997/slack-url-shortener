@@ -59,7 +59,7 @@ urlRouter.post('/slack/events', async(req, res) => {
               type:"section",
               text:{
                 type:"mrkdwn",
-                text:`Here is your Shortended URL : http://localhost:8700/${encodedValue} `
+                text:`Here is your Shortended URL :https://slack-url-shortener.onrender.com/${encodedValue} `
               }
             }
           ]  
