@@ -11,7 +11,7 @@ https://slack-url-shortener.onrender.com/
 ## slack chanel invitation link
 https://join.slack.com/t/peoplebox-assignment/shared_invite/zt-2d720xx4x-Q6Ohz0f5znshfs6heiCtgQ  (nk is only valid for 29 days from when it added)
 
-## demonstration vedio
+## demonstration vidio
 https://www.loom.com/share/9508b2d79fd545148e0af9a664383623?sid=c4c22c8d-045a-4068-a053-43d5226fb723
 
 ## Directory Structure
