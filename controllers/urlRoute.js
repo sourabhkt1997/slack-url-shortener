@@ -7,6 +7,19 @@ const axios = require("axios")
 const urlRouter = express.Router();
 
 
+async function emitmessage(message){
+  await axios.post(webhookurl,{
+    blocks:[
+     {
+      type:"section",
+      text:{
+        type:"mrkdwn",
+        text:message
+      }
+    }
+   ]  
+})
+}
 
 
 // to get the event from slack and emit messages back
@@ -26,17 +39,19 @@ urlRouter.post('/slack/events', async(req, res) => {
       // if shortURL is already in databse returning the shortented URL else creating shortURL and add to database
       if(urlData){
         let shorturl=urlData.shorturl
-        await axios.post(webhookurl,{
-            blocks:[
-             {
-              type:"section",
-              text:{
-                type:"mrkdwn",
-                text:`Here is your Shortended URL click to redirect: https://slack-url-shortener.onrender.com/${shorturl} `
-              }
-            }
-           ]  
-        })
+        let message=`Here is your Shortended URL click to redirect: https://slack-url-shortener.onrender.com/${shorturl} `
+        emitmessage(message)
+        // await axios.post(webhookurl,{
+        //     blocks:[
+        //      {
+        //       type:"section",
+        //       text:{
+        //         type:"mrkdwn",
+        //         text:`Here is your Shortended URL click to redirect: https://slack-url-shortener.onrender.com/${shorturl} `
+        //       }
+        //     }
+        //    ]  
+        // })
      }
      else{
        // encoder function
@@ -45,7 +60,7 @@ urlRouter.post('/slack/events', async(req, res) => {
           hash.update(url);
           return hash.digest('hex').slice(0, 8); 
         }
-
+        
         const encodedValue = encodeUrl(event.text);
         let newurlData=new UrlModel({
         longurl:event.text,
@@ -53,32 +68,37 @@ urlRouter.post('/slack/events', async(req, res) => {
         })
 
         await newurlData.save() 
-        await axios.post(webhookurl,{
-          blocks:[
-            {
-              type:"section",
-              text:{
-                type:"mrkdwn",
-                text:`Here is your Shortended URL :https://slack-url-shortener.onrender.com/${encodedValue} `
-              }
-            }
-          ]  
-        })
+        let message=`Here is your Shortended URL :https://slack-url-shortener.onrender.com/${encodedValue} `
+        // await axios.post(webhookurl,{
+        //   blocks:[
+        //     {
+        //       type:"section",
+        //       text:{
+        //         type:"mrkdwn",
+        //         text:`Here is your Shortended URL :https://slack-url-shortener.onrender.com/${encodedValue} `
+        //       }
+        //     }
+        //   ]  
+        // })
+        emitmessage(message)
+
       }
     }
     else{
        // if text is not a url sending the message 
-      await axios.post(webhookurl,{
-        blocks:[
-          {
-            type:"section",
-            text:{
-              type:"mrkdwn",
-              text:`Please sent a Proper URL`
-            }
-          }
-        ]  
-       })
+       let message=`Please sent a Proper URL`
+      // await axios.post(webhookurl,{
+      //   blocks:[
+      //     {
+      //       type:"section",
+      //       text:{
+      //         type:"mrkdwn",
+      //         text:`Please sent a Proper URL`
+      //       }
+      //     }
+      //   ]  
+      //  })
+       emitmessage(message)
     }
 
    }
