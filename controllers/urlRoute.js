@@ -41,27 +41,12 @@ urlRouter.post('/slack/events', async(req, res) => {
         let shorturl=urlData.shorturl
         let message=`Here is your Shortended URL click to redirect: https://slack-url-shortener.onrender.com/${shorturl} `
         emitmessage(message)
-        // await axios.post(webhookurl,{
-        //     blocks:[
-        //      {
-        //       type:"section",
-        //       text:{
-        //         type:"mrkdwn",
-        //         text:`Here is your Shortended URL click to redirect: https://slack-url-shortener.onrender.com/${shorturl} `
-        //       }
-        //     }
-        //    ]  
-        // })
+        
      }
      else{
-       // encoder function
-       function encodeUrl(url) {
-          const hash = crypto.createHash('sha256');
-          hash.update(url);
-          return hash.digest('hex').slice(0, 8); 
-        }
+
+        const encodedValue =Math.floor(1000 + Math.random() * 9000) + Date.now();
         
-        const encodedValue = encodeUrl(event.text);
         let newurlData=new UrlModel({
         longurl:event.text,
         shorturl:encodedValue
@@ -69,17 +54,7 @@ urlRouter.post('/slack/events', async(req, res) => {
 
         await newurlData.save() 
         let message=`Here is your Shortended URL :https://slack-url-shortener.onrender.com/${encodedValue} `
-        // await axios.post(webhookurl,{
-        //   blocks:[
-        //     {
-        //       type:"section",
-        //       text:{
-        //         type:"mrkdwn",
-        //         text:`Here is your Shortended URL :https://slack-url-shortener.onrender.com/${encodedValue} `
-        //       }
-        //     }
-        //   ]  
-        // })
+        
         emitmessage(message)
 
       }
@@ -87,17 +62,6 @@ urlRouter.post('/slack/events', async(req, res) => {
     else{
        // if text is not a url sending the message 
        let message=`Please sent a Proper URL`
-      // await axios.post(webhookurl,{
-      //   blocks:[
-      //     {
-      //       type:"section",
-      //       text:{
-      //         type:"mrkdwn",
-      //         text:`Please sent a Proper URL`
-      //       }
-      //     }
-      //   ]  
-      //  })
        emitmessage(message)
     }
 
